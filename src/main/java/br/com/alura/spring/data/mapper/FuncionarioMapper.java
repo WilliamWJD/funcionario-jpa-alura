@@ -6,6 +6,7 @@ import br.com.alura.spring.data.orm.Funcionario;
 import br.com.alura.spring.data.orm.Unidade;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,10 +21,11 @@ public class FuncionarioMapper {
         }
 
         funcionario.setNome(funcionarioInputDto.getNome());
-        funcionario.setSalario(funcionario.getSalario());
-        funcionario.setCpf(funcionario.getCpf());
+        funcionario.setSalario(funcionarioInputDto.getSalario());
+        funcionario.setCpf(funcionarioInputDto.getCpf());
         funcionario.setCargo(cargo);
         funcionario.setUnidadeTrabalhos(unidadesTrabalho);
+        funcionario.setDataContratacao(LocalDate.now());
 
         return funcionario;
     }

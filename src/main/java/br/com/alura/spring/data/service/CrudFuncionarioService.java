@@ -9,6 +9,9 @@ import br.com.alura.spring.data.repository.FuncionarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +28,9 @@ public class CrudFuncionarioService {
         this.crudUnidadeTrabalhoService = crudUnidadeTrabalhoService;
         this.funcionarioMapper = funcionarioMapper;
     }
+
     @Transactional
-    public Funcionario salvarFuncionario(FuncionarioInputDto funcionarioInputDto){
+    public Funcionario salvarFuncionario(FuncionarioInputDto funcionarioInputDto) {
         // recupera cargo
         Cargo cargo = crudCargoService.buscarCargoPorId(funcionarioInputDto.getCargoId());
 
@@ -41,5 +45,16 @@ public class CrudFuncionarioService {
 
         // salva funcionario
         return funcionarioRepository.save(funcionario);
+    }
+
+    public List<Funcionario> buscaFuncionariosPorNome(final String nome) {
+        return funcionarioRepository.findByNome(nome);
+    }
+
+    public List<Funcionario> buscarPorNomeDataContratacaoESalariosMaior(final String nome, final String data, final BigDecimal salario) {
+        // converte string para LocalDate
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        return funcionarioRepository.buscarPorNomeDataContratacaoESalarioMaior(nome, LocalDate.parse(data, formatter), salario);
     }
 }

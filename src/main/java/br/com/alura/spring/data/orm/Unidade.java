@@ -1,5 +1,7 @@
 package br.com.alura.spring.data.orm;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ public class Unidade {
     private Integer id;
     private String descricao;
     private String endereco;
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "unidadeTrabalhos",fetch = FetchType.EAGER)
     private List<Funcionario> funcionarios = new ArrayList<>();
 

@@ -57,4 +57,11 @@ public class CrudFuncionarioService {
 
         return funcionarioRepository.buscarPorNomeDataContratacaoESalarioMaior(nome, LocalDate.parse(data, formatter), salario);
     }
+
+    public List<Funcionario> buscarPorDataContratacaoMaior(final String data) {
+        // converte string para LocalDate
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        return funcionarioRepository.buscarFuncionariosComDataSuperior(LocalDate.parse(data, formatter));
+    }
 }

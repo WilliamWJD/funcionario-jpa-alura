@@ -12,6 +12,10 @@ import java.util.List;
 @Repository
 public interface FuncionarioRepository extends CrudRepository<Funcionario, Integer>{
     List<Funcionario> findByNome(String nome);
+
     @Query("SELECT f FROM Funcionario f WHERE f.nome LIKE %:nome% AND f.salario = :salario AND f.dataContratacao = :data")
     List<Funcionario> buscarPorNomeDataContratacaoESalarioMaior(String nome, LocalDate data, BigDecimal salario);
+
+    @Query(value = "SELECT * FROM funcionarios f WHERE f.data_contratacao >= :data", nativeQuery = true)
+    List<Funcionario> buscarFuncionariosComDataSuperior(LocalDate data);
 }

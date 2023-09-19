@@ -3,13 +3,11 @@ package br.com.alura.spring.data.resources;
 import br.com.alura.spring.data.dto.FuncionarioInputDto;
 import br.com.alura.spring.data.orm.Funcionario;
 import br.com.alura.spring.data.service.CrudFuncionarioService;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -39,5 +37,10 @@ public class FuncionarioResource {
             @RequestParam("salario") final BigDecimal salario
     ) {
         return ResponseEntity.ok(crudFuncionarioService.buscarPorNomeDataContratacaoESalariosMaior(nome, data, salario));
+    }
+
+    @GetMapping("/busca/dataMaior")
+    public ResponseEntity<List<Funcionario>> buscarPorDataContratacaoMaior(@RequestParam("data") final String data) {
+        return ResponseEntity.ok(crudFuncionarioService.buscarPorDataContratacaoMaior(data));
     }
 }

@@ -46,7 +46,7 @@ public class FuncionarioResource {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<Page<Funcionario>> listarFuncionarios(@RequestParam("page") final Integer page) {
-        return ResponseEntity.ok(crudFuncionarioService.listarFuncionarios(page));
+    public ResponseEntity<Page<Funcionario>> listarFuncionarios(@RequestParam("page") final Integer page, @RequestParam("sort") final String sort) {
+        return ResponseEntity.ok(crudFuncionarioService.listarFuncionarios(page, sort));
     }
 }

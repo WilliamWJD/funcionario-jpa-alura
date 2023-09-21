@@ -69,8 +69,8 @@ public class CrudFuncionarioService {
         return funcionarioRepository.buscarFuncionariosComDataSuperior(LocalDate.parse(data, formatter));
     }
 
-    public Page<Funcionario> listarFuncionarios(final Integer page) {
-        Pageable pageable = PageRequest.of(page, 5, Sort.unsorted());
+    public Page<Funcionario> listarFuncionarios(final Integer page, final String sort) {
+        Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.ASC, sort));
         return funcionarioRepository.findAll(pageable);
     }
 }

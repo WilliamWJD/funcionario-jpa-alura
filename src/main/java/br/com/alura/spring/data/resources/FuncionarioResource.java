@@ -3,6 +3,7 @@ package br.com.alura.spring.data.resources;
 import br.com.alura.spring.data.dto.FuncionarioInputDto;
 import br.com.alura.spring.data.orm.Funcionario;
 import br.com.alura.spring.data.service.CrudFuncionarioService;
+import br.com.alura.spring.data.service.RelatorioFuncionarioDinamico;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,11 @@ import java.util.List;
 public class FuncionarioResource {
 
     private final CrudFuncionarioService crudFuncionarioService;
+    private final RelatorioFuncionarioDinamico relatorioFuncionarioDinamico;
 
-    public FuncionarioResource(CrudFuncionarioService crudFuncionarioService) {
+    public FuncionarioResource(CrudFuncionarioService crudFuncionarioService, RelatorioFuncionarioDinamico relatorioFuncionarioDinamico) {
         this.crudFuncionarioService = crudFuncionarioService;
+        this.relatorioFuncionarioDinamico = relatorioFuncionarioDinamico;
     }
 
     @PostMapping
@@ -48,5 +51,14 @@ public class FuncionarioResource {
     @GetMapping("/listar")
     public ResponseEntity<Page<Funcionario>> listarFuncionarios(@RequestParam("page") final Integer page, @RequestParam("sort") final String sort) {
         return ResponseEntity.ok(crudFuncionarioService.listarFuncionarios(page, sort));
+    }
+
+    @GetMapping("/listar/dinamico")
+    public ResponseEntity<List<Funcionario>> listarFuncionariosDinamico(
+            @RequestParam(name = "nome", required = false) final String nome,
+            @RequestParam(name = "salario", required = false) final BigDecimal salario,
+            @RequestParam(name = "cpf", required = false) final String cpf
+    ) {
+        return ResponseEntity.ok(relatorioFuncionarioDinamico.buscaDeFuncionariosDinamica(nome, salario, cpf));
     }
 }

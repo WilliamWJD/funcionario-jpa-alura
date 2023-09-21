@@ -3,6 +3,7 @@ package br.com.alura.spring.data.resources;
 import br.com.alura.spring.data.dto.FuncionarioInputDto;
 import br.com.alura.spring.data.orm.Funcionario;
 import br.com.alura.spring.data.service.CrudFuncionarioService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +43,10 @@ public class FuncionarioResource {
     @GetMapping("/busca/dataMaior")
     public ResponseEntity<List<Funcionario>> buscarPorDataContratacaoMaior(@RequestParam("data") final String data) {
         return ResponseEntity.ok(crudFuncionarioService.buscarPorDataContratacaoMaior(data));
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<Page<Funcionario>> listarFuncionarios(@RequestParam("page") final Integer page) {
+        return ResponseEntity.ok(crudFuncionarioService.listarFuncionarios(page));
     }
 }

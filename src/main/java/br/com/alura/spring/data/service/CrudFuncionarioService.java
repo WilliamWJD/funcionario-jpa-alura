@@ -6,6 +6,10 @@ import br.com.alura.spring.data.orm.Cargo;
 import br.com.alura.spring.data.orm.Funcionario;
 import br.com.alura.spring.data.orm.Unidade;
 import br.com.alura.spring.data.repository.FuncionarioRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,5 +67,10 @@ public class CrudFuncionarioService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         return funcionarioRepository.buscarFuncionariosComDataSuperior(LocalDate.parse(data, formatter));
+    }
+
+    public Page<Funcionario> listarFuncionarios(final Integer page) {
+        Pageable pageable = PageRequest.of(page, 5, Sort.unsorted());
+        return funcionarioRepository.findAll(pageable);
     }
 }
